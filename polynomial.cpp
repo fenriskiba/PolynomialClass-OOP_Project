@@ -1,3 +1,7 @@
+/*Object Oriented Programming HW3
+  Grant Carroll
+  Based on 801-polynomial-1.pdf*/
+
 #include "polynomial.hpp"
 #include <iostream>
 #include <vector>
@@ -87,12 +91,45 @@ Polynomial Polynomial::operator-(const Polynomial& a)
     //Not in the original design but simple enough to implement
     //Multiplies each coefficient by the given int
     //ex. 5 * (ax^n + bx^n-1 + ... + cx^1 + d) = 5ax^n + 5bx^n-1 + ... + 5cx^1 + 5d
-Polynomial Polynomial::operator*(int a){}
+Polynomial Polynomial::operator*(int a)
+{
+    Polynomial temp(coefficients);
+    
+    for(int i = 0; i < coefficients.size(); i++)
+    {
+        temp.coefficients.at(i) *= a;
+    }
+    
+    return temp;
+}
 
-void Polynomial::operator=(const Polynomial& a){}
-void Polynomial::operator+=(const Polynomial& a){}
-void Polynomial::operator-=(const Polynomial& a){}
-void Polynomial::operator*=(int a){}
+//Equals Assignment Operator
+    //Clears the current coefficients and copies coefficients from "a"
+void Polynomial::operator=(const Polynomial& a)
+{
+    coefficients.clear();
+    coefficients = a.coefficients;
+}
+
+//Addition, Subtraction, and Multiplication Assignment Operators
+    //Adds, Subtracts, or Multiplies the current and given Polynomial and sets the current one to the result
+void Polynomial::operator+=(const Polynomial& a)
+{
+    Polynomial temp = *this + a;
+    *this = temp;
+}
+
+void Polynomial::operator-=(const Polynomial& a)
+{
+    Polynomial temp = *this - a;
+    *this = temp;
+}
+
+void Polynomial::operator*=(int a)
+{
+    Polynomial temp = *this * a;
+    *this = temp;
+}
 
 //Comparison Operators
 bool operator==(const Polynomial& a, const Polynomial& b){}
