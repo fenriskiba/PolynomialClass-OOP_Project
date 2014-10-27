@@ -47,7 +47,16 @@ Polynomial Polynomial::operator+(const Polynomial& a)
         }
     }
     
+    //Test for 0 coefficient at the top
+    while(coefficientArray[upper-1] == 0)
+    {
+        //Since the constructor for temp is being based on upper,
+            //decrementing upper will remove elements from the top
+        upper--;
+    }
+    
     Polynomial temp(coefficientArray, upper);
+    delete [] coefficientArray;
     return temp;
 }
 
@@ -83,7 +92,16 @@ Polynomial Polynomial::operator-(const Polynomial& a)
         }
     }
     
+    //Test for 0 coefficient at the top
+    while(coefficientArray[upper-1] == 0)
+    {
+        //Since the constructor for temp is being based on upper,
+            //decrementing upper will remove elements from the top
+        upper--;
+    }
+    
     Polynomial temp(coefficientArray, upper);
+    delete [] coefficientArray;
     return temp;
 }
 
@@ -93,13 +111,24 @@ Polynomial Polynomial::operator-(const Polynomial& a)
     //ex. 5 * (ax^n + bx^n-1 + ... + cx^1 + d) = 5ax^n + 5bx^n-1 + ... + 5cx^1 + 5d
 Polynomial Polynomial::operator*(int a)
 {
-    Polynomial temp(coefficients);
+    int upper = coefficients.size();
+    int* coefficientArray = new int[upper];
     
-    for(int i = 0; i < coefficients.size(); i++)
+    for(int i = 0; i < upper; i++)
     {
-        temp.coefficients.at(i) *= a;
+        coefficientArray = coefficients.at(i) * a;
     }
     
+    //Test for 0 coefficient at the top
+    while(coefficientArray[upper-1] == 0)
+    {
+        //Since the constructor for temp is being based on upper,
+            //decrementing upper will remove elements from the top
+        upper--;
+    }
+    
+    Polynomial temp(coefficientArray, upper);
+    delete [] coefficientArray;
     return temp;
 }
 
