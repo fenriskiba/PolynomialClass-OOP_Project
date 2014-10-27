@@ -9,10 +9,15 @@
 
 using namespace std;
 
-//Getter
+//Getters
 int Polynomial::getCoefficientAt(int power) const
 {
     return coefficients.at(power);
+}
+
+int Polynomial::getPowerOfLastMonomial() const
+{
+    return coefficients.size() - 1;
 }
 
 //Addition Operator
@@ -26,12 +31,12 @@ Polynomial Polynomial::operator+(const Polynomial& a)
     
     bool thisIsGreater = (upper == coefficients.size());
     
-    int *coefficientArray = new int[upper];
+    vector<int> coefficientArray(upper,0);
 
     //Loop through area both are in
     for(int i = 0; i < lower; i++)
     {
-        coefficientArray[i] = coefficients.at(i) + a.coefficients.at(i);
+        coefficientArray.at(i) = coefficients.at(i) + a.coefficients.at(i);
     }
     
     //Loop through and copy the rest
@@ -39,24 +44,21 @@ Polynomial Polynomial::operator+(const Polynomial& a)
     {
         if(thisIsGreater)
         {
-            coefficientArray[i] = coefficients.at(i);
+            coefficientArray.at(i) = coefficients.at(i);
         }
         else
         {
-            coefficientArray[i] = a.coefficients.at(i);
+            coefficientArray.at(i) = a.coefficients.at(i);
         }
     }
     
     //Test for 0 coefficient at the top
-    while(coefficientArray[upper-1] == 0)
+    while(coefficientArray.back() == 0)
     {
-        //Since the constructor for temp is being based on upper,
-            //decrementing upper will remove elements from the top
-        upper--;
+        coefficientArray.pop_back();
     }
     
-    Polynomial temp(coefficientArray, upper);
-    delete [] coefficientArray;
+    Polynomial temp(coefficientArray);
     return temp;
 }
 
@@ -71,12 +73,12 @@ Polynomial Polynomial::operator-(const Polynomial& a)
     
     bool thisIsGreater = (upper == coefficients.size());
     
-    int *coefficientArray = new int[upper];
+    vector<int> coefficientArray(upper,0);
 
     //Loop through area both are in
     for(int i = 0; i < lower; i++)
     {
-        coefficientArray[i] = coefficients.at(i) - a.coefficients.at(i);
+        coefficientArray.at(i) = coefficients.at(i) - a.coefficients.at(i);
     }
     
     //Loop through and copy the rest
@@ -84,24 +86,21 @@ Polynomial Polynomial::operator-(const Polynomial& a)
     {
         if(thisIsGreater)
         {
-            coefficientArray[i] = coefficients.at(i);
+            coefficientArray.at(i) = coefficients.at(i);
         }
         else
         {
-            coefficientArray[i] = -1 * a.coefficients.at(i);
+            coefficientArray.at(i) = -1 * a.coefficients.at(i);
         }
     }
     
     //Test for 0 coefficient at the top
-    while(coefficientArray[upper-1] == 0)
+    while(coefficientArray.back() == 0)
     {
-        //Since the constructor for temp is being based on upper,
-            //decrementing upper will remove elements from the top
-        upper--;
+        coefficientArray.pop_back();
     }
     
-    Polynomial temp(coefficientArray, upper);
-    delete [] coefficientArray;
+    Polynomial temp(coefficientArray);
     return temp;
 }
 
@@ -112,23 +111,20 @@ Polynomial Polynomial::operator-(const Polynomial& a)
 Polynomial Polynomial::operator*(int a)
 {
     int upper = coefficients.size();
-    int* coefficientArray = new int[upper];
+    vector<int> coefficientArray(upper,0);
     
     for(int i = 0; i < upper; i++)
     {
-        coefficientArray = coefficients.at(i) * a;
+        coefficientArray.at(i) = coefficients.at(i) * a;
     }
     
     //Test for 0 coefficient at the top
-    while(coefficientArray[upper-1] == 0)
+    while(coefficientArray.back() == 0)
     {
-        //Since the constructor for temp is being based on upper,
-            //decrementing upper will remove elements from the top
-        upper--;
+        coefficientArray.pop_back();
     }
     
-    Polynomial temp(coefficientArray, upper);
-    delete [] coefficientArray;
+    Polynomial temp(coefficientArray);
     return temp;
 }
 
@@ -161,8 +157,28 @@ void Polynomial::operator*=(int a)
 }
 
 //Comparison Operators
-bool operator==(const Polynomial& a, const Polynomial& b){}
-bool operator!=(const Polynomial& a, const Polynomial& b){}
+bool operator==(const Polynomial& a, const Polynomial& b)
+{
+    if(a.getPowerOfLastMonomial() != b.getPowerOfLastMonomial())
+    {
+        return false;
+    }
+    
+    for(int i = 0; i < a.getPowerOfLastMonomial() + 1; i++)
+    {
+        if(a.getCoefficientAt(i) != b.getCoefficientAt(i))
+        {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+bool operator!=(const Polynomial& a, const Polynomial& b)
+{
+    return !(a == b);
+}
 
 //Stream Operator
 ostream& operator<<(ostream& os, const Polynomial& t){}

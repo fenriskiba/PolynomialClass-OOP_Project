@@ -23,10 +23,14 @@ class Polynomial
         Polynomial(std::vector<int> coefficientVector) : coefficients(coefficientVector){}
         Polynomial(const Polynomial& a) : coefficients(a.coefficients){}
         
-        //Getter
+        //Getters
+        //Were not in the original specifications, but included to make the class more usable
             //Takes in the degree and returns the coefficient at that degree
             //Vector bounds errors past the bounds of the current polynomial
         int getCoefficientAt(int power) const;
+            //Returns the power from the most significal monomial
+            //ex. returns "a" for Polynomial ax^n + bx^n-1 + ... + cx^1 + d
+        int getPowerOfLastMonomial() const;
         
         //Arithmetic and Assignment Operators
             //Based on algebraic definitions of operations with polynomials
