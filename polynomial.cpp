@@ -26,10 +26,13 @@ int Polynomial::getPowerOfLastMonomial() const
     //      = (a+e)x^n + (b+f)x^n-1 + ... + (c+g)x^1 + (d+h)
 Polynomial Polynomial::operator+(const Polynomial& a)
 {
-    int lower = min(coefficients.size(), a.coefficients.size());
-    int upper = max(coefficients.size(), a.coefficients.size());
+    int thisSize = coefficients.size();
+    int thatSize = a.coefficients.size();
     
-    bool thisIsGreater = (upper == coefficients.size());
+    int lower = min(thisSize, thatSize);
+    int upper = max(thisSize, thatSize);
+    
+    bool thisIsGreater = (upper == thisSize);
     
     vector<int> coefficientArray(upper,0);
 
@@ -68,10 +71,13 @@ Polynomial Polynomial::operator+(const Polynomial& a)
     //      = (a-e)x^n + (b-f)x^n-1 + ... + (c-g)x^1 + (d-h)
 Polynomial Polynomial::operator-(const Polynomial& a)
 {
-    int lower = min(coefficients.size(), a.coefficients.size());
-    int upper = max(coefficients.size(), a.coefficients.size());
+    int thisSize = coefficients.size();
+    int thatSize = a.coefficients.size();
     
-    bool thisIsGreater = (upper == coefficients.size());
+    int lower = min(thisSize, thatSize);
+    int upper = max(thisSize, thatSize);
+    
+    bool thisIsGreater = (upper == thisSize);
     
     vector<int> coefficientArray(upper,0);
 
@@ -181,4 +187,34 @@ bool operator!=(const Polynomial& a, const Polynomial& b)
 }
 
 //Stream Operator
-ostream& operator<<(ostream& os, const Polynomial& t){}
+ostream& operator<<(ostream& os, const Polynomial& poly)
+{
+    int upper = poly.getPowerOfLastMonomial();
+    string temp = "";
+    
+    for(int i = upper; i >=0; i--)
+    {
+        if(poly.getCoefficientAt(i) != 0)
+        {
+            if(temp != "" && poly.getCoefficientAt(i) > 0)
+            {
+                temp += " + ";
+            }
+            else if(temp != "" && poly.getCoefficientAt(i) < 0)
+            {
+                temp += " - ";
+            }
+            
+            temp += abs(poly.getCoefficientAt(i));
+            
+            if(i > 0)
+            {
+                temp += "x^" + i;
+            }
+        }
+    }
+    
+    os << temp;
+    return os;
+}
+
