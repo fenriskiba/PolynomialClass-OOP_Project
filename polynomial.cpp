@@ -1,17 +1,12 @@
 #include "polynomial.hpp"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-//Constructors
-Polynomial::Polynomial(){}
-Polynomial::Polynomial(int[] coefficientArray, int size){}
-Polynomial::Polynomial(vector<int> coefficientVector){}
-Polynomial::Polynomial(const Polynomial& a){}
-
 //Getters
-int getCoefficientAt(int power) const{}
-int operator[](int power) const{}
+int Polynomial::getCoefficientAt(int power) const{}
+int Polynomial::operator[](int power) const{}
 
 //Arithmetic Operators
 Polynomial Polynomial::operator+(const Polynomial& a){}

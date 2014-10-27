@@ -2,6 +2,7 @@
 #define	POLYNOMIAL_HPP
 
 #include <iostream>
+#include <vector>
 
 class Polynomial
 {
@@ -9,10 +10,9 @@ class Polynomial
         std::vector<int> coefficients;
     
     public:
-        Polynomial();
-        Polynomial(int[] coefficientArray, int size);
-        Polynomial(std::vector<int> coefficientVector);
-        Polynomial(const Polynomial& a);
+        Polynomial(int coefficientArray[], int size) : coefficients(&coefficientArray[0], &coefficientArray[0]+size){}
+        Polynomial(std::vector<int> coefficientVector) : coefficients(coefficientVector){}
+        Polynomial(const Polynomial& a) : coefficients(a.coefficients){}
         
         int getCoefficientAt(int power) const;
         int operator[](int power) const;
