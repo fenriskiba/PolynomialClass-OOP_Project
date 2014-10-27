@@ -1,4 +1,4 @@
-#include "Polynomial.hpp"
+#include "polynomial.hpp"
 #include <iostream>
 
 using namespace std;

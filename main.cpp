@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Polynomial.hpp"
+#include "polynomial.hpp"
 
 using namespace std;
 
