@@ -13,6 +13,8 @@ class Polynomial
         //Constructors
             //Can be intitialized with an array or vector of integers representing the coefficients
             //Can also be initialized using a copy constructor and another Polynomial
+            //Default is 0 (represented as 0x^0)
+        Polynomial() : coefficients(1,0){}
         Polynomial(int coefficientArray[], int size) : coefficients(&coefficientArray[0], &coefficientArray[0]+size){}
         Polynomial(std::vector<int> coefficientVector) : coefficients(coefficientVector){}
         Polynomial(const Polynomial& a) : coefficients(a.coefficients){}
