@@ -56,7 +56,7 @@ Polynomial Polynomial::operator+(const Polynomial& a)
     }
     
     //Test for 0 coefficient at the top
-    while(coefficientArray.back() == 0)
+    while(coefficientArray.back() == 0 && coefficientArray.size() > 1)
     {
         coefficientArray.pop_back();
     }
@@ -101,7 +101,7 @@ Polynomial Polynomial::operator-(const Polynomial& a)
     }
     
     //Test for 0 coefficient at the top
-    while(coefficientArray.back() == 0)
+    while(coefficientArray.back() == 0 && coefficientArray.size() > 1)
     {
         coefficientArray.pop_back();
     }
@@ -125,7 +125,7 @@ Polynomial Polynomial::operator*(int a)
     }
     
     //Test for 0 coefficient at the top
-    while(coefficientArray.back() == 0)
+    while(coefficientArray.back() == 0 && coefficientArray.size() > 1)
     {
         coefficientArray.pop_back();
     }
@@ -192,7 +192,7 @@ ostream& operator<<(ostream& os, const Polynomial& poly)
     int upper = poly.getPowerOfLastMonomial();
     string temp = "";
     
-    for(int i = upper; i >=0; i--)
+    for(int i = upper; i >= 0; i--)
     {
         if(poly.getCoefficientAt(i) != 0)
         {
@@ -205,16 +205,25 @@ ostream& operator<<(ostream& os, const Polynomial& poly)
                 temp += " - ";
             }
             
-            temp += abs(poly.getCoefficientAt(i));
+            if(abs(poly.getCoefficientAt(i)) > 1)
+            {
+                temp += to_string(abs(poly.getCoefficientAt(i)));
+            }
             
             if(i > 0)
             {
-                temp += "x^" + i;
+                temp += "x^" + to_string(i);
             }
         }
     }
     
+    if(temp == "")
+    {
+        temp = "0";
+    }
+    
     os << temp;
+    
     return os;
 }
 
